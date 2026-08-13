@@ -1,5 +1,5 @@
-pyproject.toml
 help.txt
 LICENSE
 README.md
 donations.db
+__pycache__
