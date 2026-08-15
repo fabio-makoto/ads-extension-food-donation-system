@@ -33,3 +33,28 @@ def create_tables(db: QSqlDatabase) -> bool:
         return False  
     
     return True  # retorna True se as tabelas forem criadas com sucesso
+
+
+def insert_donation(db: QSqlDatabase, name: str, food: str, quantity: int, date: str) -> bool:
+    # cria uma consulta associada à conexão com o banco de dados
+    query = QSqlQuery(db)
+
+    # prepara o comando SQL utilizando parâmetros para receber os valores
+    query.prepare("""
+        INSERT INTO donations (name, food, quantity, date)
+        VALUES (:name, :food, :quantity, :date)
+    """)
+
+    # associa os valores recebidos pela função aos parâmetros do comando SQL
+    query.bindValue(":name", name)
+    query.bindValue(":food", food)
+    query.bindValue(":quantity", quantity)
+    query.bindValue(":date", date)
+
+    if not query.exec():
+        # se o comando SQL não rodar, aparecerá um pop-up com a mensagem de erro retornado pelo QtSql
+        QMessageBox.critical(None, "Erro ao cadastrar doação", query.lastError().text())
+        return False
+    
+    # retorna True se a doação for inserida com sucesso
+    return True
