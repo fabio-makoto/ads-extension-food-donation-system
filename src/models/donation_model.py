@@ -94,3 +94,55 @@ def find_donations_by_name(db: QSqlDatabase, name: str) -> list[dict]:
     
     return donations
 
+
+def update_donations(db: QSqlDatabase, donation_id: int, food: str, quantity: int) -> bool:
+    # cria uma consulta associada à conexão com o banco de dados
+    query = QSqlQuery(db)
+
+    # prepara o comando SQL para atualizar o alimento e a quantidade da doação
+    query.prepare("""
+        UPDATE donations
+        SET food = :food, quantity = :quantity
+        WHERE id = :id
+    """)
+
+    # associa os valores recebidos aos parâmetros do comando SQL
+    query.bindValue(":food", food)
+    query.bindValue(":quantity", quantity)
+    query.bindValue(":id", donation_id)
+
+    if not query.exec():
+        # verifica se ocorreu algum erro executar o update
+        QMessageBox.critical(None, "Erro ao editar a doação", query.lastError().text())
+        return False
+    
+    if query.numRowsAffected() == 0:
+        # verifica se alguma doação foi encontrada e alterada
+        return False
+    
+    return True
+
+
+def delete_donation(db: QSqlDatabase, donation_id: int) -> bool:
+    query = QSqlQuery(db)
+
+    # prepara o comando SQL para excluir uma doação pelo ID
+    query.prepare("""
+        DELETE FROM donations
+        WHERE id = :id
+    """)
+
+    # associa o ID recebido ao parâmetro do comando SQL
+    query.bindValue(":id", donation_id)
+
+    if not query.exec():
+        # verifica se ocorreu algum erro ao deletar uma doação
+        QMessageBox.critical(None, "Erro ao excluir doação", query.lastError().text())
+        return False
+    
+    # verifica se alguma doação foi realmente excluída
+    if query.numRowsAffected() == 0:
+        return False
+    
+    return True
+    
