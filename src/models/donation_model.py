@@ -145,4 +145,37 @@ def delete_donation(db: QSqlDatabase, donation_id: int) -> bool:
         return False
     
     return True
-    
+
+
+def find_all_donations(db: QSqlDatabase) -> list[dict]:
+    # função de buscar todas as doações para utilizar no relatório
+    query = QSqlQuery(db)
+
+    # prepara a consulta para buscar todas as doações cadastradas
+    # utilizando o ORDER BY para as doações mais recentes aparecerem primeiro
+    query.prepare("""
+        SELECT id, name, food, quantity, date
+        FROM donations
+        ORDER BY date DESC, id DESC
+    """)
+
+    if not query.exec():
+        # verifica se ocorreu algum erro ao executar a busca
+        QMessageBox.critical(None, "Erro ao listar doações", query.lastError().text())
+        return []
+
+    donations = []
+
+    # percorre todos os registros encontrados
+    while query.next():
+        donation = {
+            "id": query.value("id"),
+            "name": query.value("name"),
+            "food": query.value("food"),
+            "quantity": query.value("quantity"),
+            "date": query.value("date")
+        }
+
+        donations.append(donation)
+
+    return donations
