@@ -1,0 +1,52 @@
+QWidget#homePage {
+	background-color: #B3EBF2;
+}
+
+QWidget#donatePage {
+	background-color: #B3EBF2;
+}
+
+QWidget#searchPage {
+	background-color: #B3EBF2;
+}
+
+QLabel#titleLabel {
+	font-size: 24px;
+	font-weight: bold;
+	color: #263238;
+}
+
+QLabel#donateTitleLabel {
+	font-size: 24px;
+	font-weight: bold;
+	color: #263238;
+}
+
+QLabel#searchTitleLabel {
+	font-size: 24px;
+	font-weight: bold;
+	color: #263238;
+}
+
+QPushButton#searchBackButton {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+QPushButton {
+	background-color: #4A9DAE;
+	color: #FFFFFF;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+QPushButton:hover {
+	background-color: #77CBDA;
+}
+
+QPushButton:pressed {
+	background-color: #2E6C7B;
+}
