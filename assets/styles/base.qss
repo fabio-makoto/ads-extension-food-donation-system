@@ -10,6 +10,14 @@ QWidget#searchPage {
 	background-color: #B3EBF2;
 }
 
+QWidget#editPage {
+	background-color: #B3EBF2;
+}
+
+QWidget#deletePage {
+	background-color: #B3EBF2;
+}
+
 QLabel#titleLabel {
 	font-size: 24px;
 	font-weight: bold;
@@ -27,6 +35,19 @@ QLabel#searchTitleLabel {
 	font-weight: bold;
 	color: #263238;
 }
+
+QLabel#editTitleLabel {
+	font-size: 24px;
+	font-weight: bold;
+	color: #263238;
+}
+
+QLabel#deleteTitleLabel {
+	font-size: 24px;
+	font-weight: bold;
+	color: #263238;
+}
+
 
 QPushButton#searchBackButton {
 	margin-top: 5px;

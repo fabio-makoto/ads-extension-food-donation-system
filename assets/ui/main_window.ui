@@ -23,7 +23,7 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayoutCentralWidget">
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="minimumSize">
@@ -33,7 +33,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="homePage">
        <layout class="QVBoxLayout" name="verticalLayoutHomePage">
@@ -374,7 +374,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="searchPage">
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="gridLayoutSearchPage">
         <item row="5" column="1" colspan="2">
          <widget class="QPushButton" name="searchButtonPage">
           <property name="text">
@@ -468,6 +468,369 @@
          <widget class="QRadioButton" name="searchAllRadioButton">
           <property name="text">
            <string>Todos os Registros</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="editPage">
+       <layout class="QGridLayout" name="gridLayoutEditPage">
+        <item row="13" column="2">
+         <widget class="QDateEdit" name="editDateEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+          <property name="displayFormat">
+           <string>dd/MM/yyyy</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="6" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="editTitleLabel">
+          <property name="text">
+           <string>EDITAR DOAÇÃO</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0" colspan="2">
+         <widget class="QLabel" name="editNameLabel">
+          <property name="text">
+           <string>Nome do doador:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="editFoodLabel">
+          <property name="text">
+           <string>Alimento:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="2">
+         <widget class="QComboBox" name="editFoodComboBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="currentIndex">
+           <number>-1</number>
+          </property>
+          <property name="placeholderText">
+           <string>Selecione um alimento...</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Pacote de arroz 5 kg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Pacote de arroz 1 kg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Pacote de feijão 1 kg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Pacote de açúcar 1 kg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Pacote de macarrão 500 g</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Caixa de leite 1 L</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Óleo 900 ml</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QLineEdit" name="editNameLineEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QLabel" name="editIdLabel">
+          <property name="text">
+           <string>ID da doação:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0" colspan="2">
+         <widget class="QLabel" name="editQuantityLabel">
+          <property name="text">
+           <string>Quantidade:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="editSearchButton">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>BUSCAR</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="0" colspan="2">
+         <widget class="QLabel" name="editDataLabel">
+          <property name="text">
+           <string>Data da doação:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="2">
+         <widget class="QSpinBox" name="editQuantitySpinBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="editIdLineEdit">
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="6">
+         <spacer name="verticalSpacerTop">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="17" column="0" colspan="6">
+         <spacer name="verticalSpacerBottom">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="15" column="0" colspan="6" alignment="Qt::AlignHCenter">
+         <widget class="QPushButton" name="saveEditButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>SALVAR ALTERAÇÕES</string>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="0" colspan="6" alignment="Qt::AlignHCenter">
+         <widget class="QPushButton" name="editBackButton">
+          <property name="text">
+           <string>VOLTAR</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="deletePage">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="2" column="0">
+         <widget class="QLabel" name="deleteIdLabel">
+          <property name="text">
+           <string>ID da doação:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="deleteNameLabel">
+          <property name="text">
+           <string>Nome do doador:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLineEdit" name="deleteNameLineEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="deleteDateLabel">
+          <property name="text">
+           <string>Data da doação:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="deleteSearchButton">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>BUSCAR</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="deleteFoodLabel">
+          <property name="text">
+           <string>Alimento:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="6" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="deleteTitleLabel">
+          <property name="text">
+           <string>EXCLUIR DOAÇÃO</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="deleteIdLineEdit">
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="6">
+         <spacer name="verticalSpacerTopDeletePage">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="deleteQuantityLabel">
+          <property name="text">
+           <string>Quantidade:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <widget class="QLineEdit" name="deleteFoodLineEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QSpinBox" name="deleteQuantitySpinBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="2">
+         <widget class="QDateEdit" name="deleteDateEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="0" colspan="6">
+         <spacer name="verticalSpacerBottomDeletePage">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="11" column="0" colspan="6" alignment="Qt::AlignHCenter">
+         <widget class="QPushButton" name="deleteBackButton">
+          <property name="text">
+           <string>VOLTAR</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0" colspan="6" alignment="Qt::AlignHCenter">
+         <widget class="QPushButton" name="confirmDeleteButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>EXCLUIR DOAÇÃO</string>
           </property>
          </widget>
         </item>

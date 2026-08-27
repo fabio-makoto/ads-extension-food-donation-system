@@ -143,6 +143,137 @@ def search_donations():
         ui.searchTable.setItem(row, 4, QTableWidgetItem(date.toString("dd/MM/yyyy")))
 
 
+# função que irá carregar a doação para editá-la
+def load_donation_for_edit():
+    donation_id = ui.editIdLineEdit.text().strip()
+
+    if not donation_id:
+        # verifica se o line edit do id não está vazio
+        QMessageBox.warning(window, "Campo obrigatório", "Informe o ID da doação.")
+        return
+    
+    if not donation_id.isdigit():
+        # verifica se o valor informado é um digito
+        QMessageBox.warning(window, "ID inválido", "Informe um ID válido.")
+        return
+    
+    donation = find_donation_by_id(db, int(donation_id))
+
+    if donation is None:
+        # caso seja informado um ID que não corresponda a nenhuma doação registrada
+        QMessageBox.information(window, "Doação não encontrada", "Nenhuma doação foi encontrada com esse ID.")
+        return
+    
+    # preenche os dados encontrados
+    ui.editNameLineEdit.setText(donation["name"])
+
+    # procura dentro do combo box o alimento que corresponde ao alimento salvo no banco de dados
+    index = ui.editFoodComboBox.findText(donation["food"])
+    if index >= 0:
+        ui.editFoodComboBox.setCurrentIndex(index)
+    
+    ui.editQuantitySpinBox.setValue(donation["quantity"])
+
+    date = QDate.fromString(donation["date"], "yyyy-MM-dd")
+    ui.editDateEdit.setDate(date)
+
+    # habilita os campos que podem ser editados
+    ui.editFoodComboBox.setEnabled(True)
+    ui.editQuantitySpinBox.setEnabled(True)
+    ui.saveEditButton.setEnabled(True)
+
+
+# função que irá salvar a edição da doação
+def save_donation_edit():
+    donation_id = ui.editIdLineEdit.text().strip()
+    food = ui.editFoodComboBox.currentText()
+    quantity = ui.editQuantitySpinBox.value()
+
+    if not donation_id:
+        # verifica se o campo do id não está vazio
+        QMessageBox.warning(window, "Campo obrigatório", "Informe o ID da doação.")
+        return
+    
+    if update_donations(db, int(donation_id), food, quantity):
+        QMessageBox.information(window, "Doação atualizada", "Doação atualizada com sucesso.")
+
+        # limpa os campos após a atualização
+        ui.editIdLineEdit.clear()
+        ui.editNameLineEdit.clear()
+        ui.editFoodComboBox.setCurrentIndex(-1)
+        ui.editQuantitySpinBox.setValue(1)
+        ui.editDateEdit.clear()
+
+        # desabilita novamente os campos de edição
+        ui.editFoodComboBox.setEnabled(False)
+        ui.editQuantitySpinBox.setEnabled(False)
+        ui.saveEditButton.setEnabled(False)
+
+
+# função que irá carregar a doação para excluir
+def load_donation_for_delete():
+    donation_id = ui.deleteIdLineEdit.text().strip()
+
+    if not donation_id:
+        # verifica se o campo do id está vazio
+        QMessageBox.warning(
+            window, "Campo obrigatório", "Informe o ID da doação."
+        )
+        return
+    
+    if not donation_id.isdigit():
+        # verifica se o valor informado é válido para ID
+        QMessageBox.warning(
+            window, "ID inválido", "Informe um ID válido."
+        )
+        return
+    
+    donation = find_donation_by_id(db, int(donation_id))
+
+    # checa se a função encontrou alguma doação com o ID informado
+    if donation is None:
+        QMessageBox.information(
+            window, "Doação não encontrada", "Nenhuma doação foi encontrada com esse ID."
+        )
+        return
+    
+    # preenche os dados encontrados
+    ui.deleteNameLineEdit.setText(donation["name"])
+    ui.deleteFoodLineEdit.setText(donation["food"])
+    ui.deleteQuantitySpinBox.setValue(donation["quantity"])
+
+    date = QDate.fromString(donation["date"], "yyyy-MM-dd")
+    ui.deleteDateEdit.setDate(date)
+
+    # habilita o botão de excluir doação
+    ui.confirmDeleteButton.setEnabled(True)
+
+
+# função para confirmar a exclusão da doação
+def confirm_delete_donation():
+    donation_id = ui.deleteIdLineEdit.text().strip()
+
+    if not donation_id:
+        # verifica se o campo do ID está vazio
+        QMessageBox.warning(window, "Campo obrigatório", "Informe o ID da doação.")
+        return
+
+    # cria a caixa de mensagem de confirmação e pega a resposta
+    answer = QMessageBox.question(window, "Confirmar exclusão", "Deseja realmente excluir esta doação?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+
+    if answer == QMessageBox.StandardButton.Yes:
+        if delete_donation(db, int(donation_id)):
+            QMessageBox.information(window, "Doação excluída", "Doação excluída com sucesso.")
+
+            ui.deleteIdLineEdit.clear()
+            ui.deleteNameLineEdit.clear()
+            ui.deleteFoodLineEdit.clear()
+            ui.deleteQuantitySpinBox.setValue(0)
+            ui.deleteDateEdit.clear()
+
+            ui.confirmDeleteButton.setEnabled(False)
+
+
 # definindo a página inicial antes de iniciar o sistema
 ui.stackedWidget.setCurrentWidget(ui.homePage)
 
@@ -162,6 +293,22 @@ ui.searchButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.sea
 
 # Consulta de doações para Página inicial
 ui.searchBackButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.homePage))
+
+# Página inicial para Edição de doação
+ui.editButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.editPage))
+
+# Edição de doação para Página inicial
+ui.editBackButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.homePage))
+
+# Página inicial para Página de excluir doação
+ui.deleteButton.clicked.connect(
+    lambda: ui.stackedWidget.setCurrentWidget(ui.deletePage)
+)
+
+# Página de excluir doação para Página inicial
+ui.deleteBackButton.clicked.connect(
+    lambda: ui.stackedWidget.setCurrentWidget(ui.homePage)
+)
 
 # desabilita o campo de busca quando "Todos os registros" estiver selecionado
 def toggle_search_field(checked: bool):
@@ -184,6 +331,18 @@ ui.registerDonationButton.clicked.connect(register_donation)
 
 # consulta uma doação
 ui.searchButtonPage.clicked.connect(search_donations)
+
+# carrega uma doação buscada pelo id
+ui.editSearchButton.clicked.connect(load_donation_for_edit)
+
+# salva a edição da doação
+ui.saveEditButton.clicked.connect(save_donation_edit)
+
+# carrega uma doação buscada pelo id para exclusão
+ui.deleteSearchButton.clicked.connect(load_donation_for_delete)
+
+# confirma a exclusão da doação
+ui.confirmDeleteButton.clicked.connect(confirm_delete_donation)
 
 # mostra a janela do sistema
 window.show()
