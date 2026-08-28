@@ -22,6 +22,10 @@ QWidget#reportPage {
 	background-color: #B3EBF2;
 }
 
+QWidget#aboutPage {
+	background-color: #B3EBF2;
+}
+
 QLabel#titleLabel {
 	font-size: 24px;
 	font-weight: bold;
@@ -54,6 +58,18 @@ QLabel#deleteTitleLabel {
 
 QLabel#reportTitleLabel {
 	font-size: 24px;
+	font-weight: bold;
+	color: #263238;
+}
+
+QLabel#aboutTitleLabel {
+	font-size: 24px;
+	font-weight: bold;
+	color: #263238;
+}
+
+QLabel#aboutSystemNameLabel {
+	font-size: 16px;
 	font-weight: bold;
 	color: #263238;
 }

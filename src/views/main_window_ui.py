@@ -32,6 +32,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutCentralWidget = QVBoxLayout(self.centralwidget)
         self.verticalLayoutCentralWidget.setObjectName(u"verticalLayoutCentralWidget")
+        self.verticalLayoutCentralWidget.setContentsMargins(0, -1, -1, -1)
         self.stackedWidget = QStackedWidget(self.centralwidget)
         self.stackedWidget.setObjectName(u"stackedWidget")
         self.stackedWidget.setMinimumSize(QSize(800, 700))
@@ -524,6 +525,64 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addItem(self.verticalSpacerBottomReportPage, 8, 0, 1, 4)
 
         self.stackedWidget.addWidget(self.reportPage)
+        self.aboutPage = QWidget()
+        self.aboutPage.setObjectName(u"aboutPage")
+        self.verticalLayout = QVBoxLayout(self.aboutPage)
+        self.verticalLayout.setSpacing(10)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(15, -1, -1, 15)
+        self.verticalSpacerTopAboutPage = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacerTopAboutPage)
+
+        self.aboutTitleLabel = QLabel(self.aboutPage)
+        self.aboutTitleLabel.setObjectName(u"aboutTitleLabel")
+
+        self.verticalLayout.addWidget(self.aboutTitleLabel, 0, Qt.AlignHCenter)
+
+        self.aboutSystemNameLabel = QLabel(self.aboutPage)
+        self.aboutSystemNameLabel.setObjectName(u"aboutSystemNameLabel")
+
+        self.verticalLayout.addWidget(self.aboutSystemNameLabel, 0, Qt.AlignHCenter)
+
+        self.aboutDescriptionLabel = QLabel(self.aboutPage)
+        self.aboutDescriptionLabel.setObjectName(u"aboutDescriptionLabel")
+        self.aboutDescriptionLabel.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.aboutDescriptionLabel)
+
+        self.aboutOdsLabel = QLabel(self.aboutPage)
+        self.aboutOdsLabel.setObjectName(u"aboutOdsLabel")
+        self.aboutOdsLabel.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.aboutOdsLabel)
+
+        self.aboutTechnologiesLabel = QLabel(self.aboutPage)
+        self.aboutTechnologiesLabel.setObjectName(u"aboutTechnologiesLabel")
+        self.aboutTechnologiesLabel.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.aboutTechnologiesLabel)
+
+        self.aboutVersionLabel = QLabel(self.aboutPage)
+        self.aboutVersionLabel.setObjectName(u"aboutVersionLabel")
+
+        self.verticalLayout.addWidget(self.aboutVersionLabel)
+
+        self.aboutDeveloperLabel = QLabel(self.aboutPage)
+        self.aboutDeveloperLabel.setObjectName(u"aboutDeveloperLabel")
+
+        self.verticalLayout.addWidget(self.aboutDeveloperLabel)
+
+        self.verticalSpacerBottomAboutPage = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacerBottomAboutPage)
+
+        self.aboutBackButton = QPushButton(self.aboutPage)
+        self.aboutBackButton.setObjectName(u"aboutBackButton")
+
+        self.verticalLayout.addWidget(self.aboutBackButton, 0, Qt.AlignHCenter)
+
+        self.stackedWidget.addWidget(self.aboutPage)
 
         self.verticalLayoutCentralWidget.addWidget(self.stackedWidget)
 
@@ -531,7 +590,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(5)
+        self.stackedWidget.setCurrentIndex(0)
         self.donateButton.setDefault(False)
         self.editFoodComboBox.setCurrentIndex(-1)
 
@@ -617,5 +676,13 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem6 = self.reportTable.horizontalHeaderItem(1)
         ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"Quantidade", None))
         self.totalDonationsTitleLabel.setText(QCoreApplication.translate("MainWindow", u"Total de doa\u00e7\u00f5es:", None))
+        self.aboutTitleLabel.setText(QCoreApplication.translate("MainWindow", u"SOBRE O SISTEMA", None))
+        self.aboutSystemNameLabel.setText(QCoreApplication.translate("MainWindow", u"Sistema de Doa\u00e7\u00e3o de Alimentos", None))
+        self.aboutDescriptionLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Sistema desenvolvido para auxiliar no cadastro e<br/>gerenciamento de doa\u00e7\u00f5es de alimentos n\u00e3o pereciveis.</p></body></html>", None))
+        self.aboutOdsLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>O projeto est\u00e1 relacionado ao ODS 2:<br/>Fome Zero e Agricultura Sustent\u00e1vel</p></body></html>", None))
+        self.aboutTechnologiesLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Tecnologias utilizadas: <br/>Python <br/>Pyside6 <br/>SQLite</p></body></html>", None))
+        self.aboutVersionLabel.setText(QCoreApplication.translate("MainWindow", u"Vers\u00e3o: 1.0", None))
+        self.aboutDeveloperLabel.setText(QCoreApplication.translate("MainWindow", u"Desenvolvido por: Fabio Makoto", None))
+        self.aboutBackButton.setText(QCoreApplication.translate("MainWindow", u"VOLTAR", None))
     # retranslateUi
 

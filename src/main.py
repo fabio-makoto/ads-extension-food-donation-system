@@ -370,6 +370,12 @@ ui.reportButton.clicked.connect(open_report_page)
 # Página de relatórios para Página inicial
 ui.reportBackButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.homePage))
 
+# Página inicial para Página de sobre
+ui.aboutButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.aboutPage))
+
+# Página de sobre para Página inicial
+ui.aboutBackButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.homePage))
+
 # desabilita o campo de busca quando "Todos os registros" estiver selecionado
 def toggle_search_field(checked: bool):
     if checked:
