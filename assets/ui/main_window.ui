@@ -33,7 +33,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="homePage">
        <layout class="QVBoxLayout" name="verticalLayoutHomePage">
@@ -202,7 +202,7 @@
          </widget>
         </item>
         <item alignment="Qt::AlignHCenter">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="reportButton">
           <property name="minimumSize">
            <size>
             <width>250</width>
@@ -833,6 +833,115 @@
            <string>EXCLUIR DOAÇÃO</string>
           </property>
          </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="reportPage">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="4" column="1" alignment="Qt::AlignLeft">
+         <widget class="QLabel" name="topFoodValueLabel">
+          <property name="text">
+           <string>-</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" alignment="Qt::AlignLeft">
+         <widget class="QLabel" name="topFoodTitleLabel">
+          <property name="text">
+           <string>Alimento mais doado:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" alignment="Qt::AlignLeft">
+         <widget class="QLabel" name="totalItemsTitleLabel">
+          <property name="text">
+           <string>Total de itens doados:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="totalDonationsValueLabel">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="4" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="reportTitleLabel">
+          <property name="text">
+           <string>RELATÓRIO DE DOAÇÕES</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1" alignment="Qt::AlignLeft">
+         <widget class="QLabel" name="totalItemsValueLabel">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0" colspan="4" alignment="Qt::AlignHCenter">
+         <widget class="QPushButton" name="refreshReportButton">
+          <property name="text">
+           <string>ATUALIZAR</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0" colspan="4" alignment="Qt::AlignHCenter">
+         <widget class="QPushButton" name="reportBackButton">
+          <property name="text">
+           <string>VOLTAR</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="4">
+         <widget class="QTableWidget" name="reportTable">
+          <property name="styleSheet">
+           <string notr="true">margin-right: 10px;</string>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <column>
+           <property name="text">
+            <string>Alimento</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Quantidade</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="1" column="0" alignment="Qt::AlignLeft">
+         <widget class="QLabel" name="totalDonationsTitleLabel">
+          <property name="text">
+           <string>Total de doações:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0" colspan="4">
+         <spacer name="verticalSpacerBottomReportPage">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>

@@ -10,7 +10,7 @@ from PySide6.QtCore import QDate, QLocale
 from database.connection import create_connection, create_tables
 from src.models.donation_model import (
     find_all_donations, find_donation_by_id, insert_donation, find_donations_by_name, update_donations,
-    delete_donation
+    delete_donation, get_donation_summary, get_total_donations, get_total_items
     )
 
 from src.views.main_window_ui import Ui_MainWindow
@@ -31,13 +31,19 @@ ui = Ui_MainWindow()
 ui.setupUi(window)
 
 # configura a largura das colunas da tabela de consulta
-header = ui.searchTable.horizontalHeader()
+search_header = ui.searchTable.horizontalHeader()
 
-header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
-header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
-header.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
-header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
-header.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+search_header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)  # ocupa apenas o espaço necessário ID
+search_header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)  # ocupa todo espaço disponivel NOME
+search_header.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)  # ocupa todo espaço disponivel ALIMENTO
+search_header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)  # ocupa apenas o espaço necessário QUANTIDADE
+search_header.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)  # ocupa apenas o espaço necessário DATA
+
+# configura a largura das colunas da tabela do relatório
+report_header = ui.reportTable.horizontalHeader()
+
+report_header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)  # ocupa todo espaço disponivel ALIMENTO
+report_header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)  # ocupa apenas o espaço necessário QUANTIDADE
 
 # adiciona os alimentos ao comboBox
 ui.comboBoxFood.addItems([
@@ -51,7 +57,7 @@ ui.comboBoxFood.addItems([
 ])
 
 # função que irá fazer o tratamento dos campos e do registro da doação
-def register_donation():
+def register_donation() -> None:
     name = ui.lineEditName.text().strip()
     food = ui.comboBoxFood.currentText()
     quantity = ui.spinBoxQuantity.value()
@@ -78,7 +84,7 @@ def register_donation():
 
 
 # função que irá fazer a busca das doações e verificar qual radio button está preenchido
-def search_donations():
+def search_donations() -> None:
     search_text = ui.searchLineEdit.text().strip()
     
     # limpa os resultados anteriores da tabela
@@ -144,7 +150,7 @@ def search_donations():
 
 
 # função que irá carregar a doação para editá-la
-def load_donation_for_edit():
+def load_donation_for_edit() -> None:
     donation_id = ui.editIdLineEdit.text().strip()
 
     if not donation_id:
@@ -184,7 +190,7 @@ def load_donation_for_edit():
 
 
 # função que irá salvar a edição da doação
-def save_donation_edit():
+def save_donation_edit() -> None:
     donation_id = ui.editIdLineEdit.text().strip()
     food = ui.editFoodComboBox.currentText()
     quantity = ui.editQuantitySpinBox.value()
@@ -211,7 +217,7 @@ def save_donation_edit():
 
 
 # função que irá carregar a doação para excluir
-def load_donation_for_delete():
+def load_donation_for_delete() -> None:
     donation_id = ui.deleteIdLineEdit.text().strip()
 
     if not donation_id:
@@ -250,7 +256,7 @@ def load_donation_for_delete():
 
 
 # função para confirmar a exclusão da doação
-def confirm_delete_donation():
+def confirm_delete_donation() -> None:
     donation_id = ui.deleteIdLineEdit.text().strip()
 
     if not donation_id:
@@ -272,6 +278,58 @@ def confirm_delete_donation():
             ui.deleteDateEdit.clear()
 
             ui.confirmDeleteButton.setEnabled(False)
+
+
+# carrega as informações do relatório
+def load_report() -> None:
+    # busca o resumo das doações no banco de dados
+    summary = get_donation_summary(db)
+
+    # busca a quantidade total de doações cadastradas
+    total_donations = get_total_donations(db)
+
+    # busca a quantitade total de itens doados
+    total_items = get_total_items(db)
+
+    # exibe o total de doações no label
+    ui.totalDonationsValueLabel.setText(str(total_donations))
+
+    # exibe o total de itens doados no relatório
+    ui.totalItemsValueLabel.setText(str(total_items))
+
+    # verifica se existem doações cadastradas
+    if summary:
+        # o primeiro item é o mais doado, pois a consulta está em ordem decrescente
+        top_food = str(summary[0]["food"])
+
+        # exibe o alimento mais doado no relatório
+        ui.topFoodValueLabel.setText(top_food)
+    else:
+        # exibe um traço caso não existam doações
+        ui.topFoodValueLabel.setText("-")
+
+    # limpa os dados que já estiverem na tabela
+    ui.reportTable.setRowCount(0)
+
+    # percorre cada alimento retornado pela consulta
+    for item in summary:
+        # pega o número da próxima linha disponivel
+        row = ui.reportTable.rowCount()
+
+        ui.reportTable.insertRow(row)
+
+        # adiciona o nome do alimneto na primeira coluna
+        ui.reportTable.setItem(row, 0, QTableWidgetItem(str(item["food"])))
+
+        # adiciona a quantidade total na segunda coluna
+        ui.reportTable.setItem(row, 1, QTableWidgetItem(str(item["quantity"])))
+
+
+# função que atualiza os dados do relatório e depois abre a página
+def open_report_page() -> None:
+    load_report()
+
+    ui.stackedWidget.setCurrentWidget(ui.reportPage)
 
 
 # definindo a página inicial antes de iniciar o sistema
@@ -301,14 +359,16 @@ ui.editButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.editP
 ui.editBackButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.homePage))
 
 # Página inicial para Página de excluir doação
-ui.deleteButton.clicked.connect(
-    lambda: ui.stackedWidget.setCurrentWidget(ui.deletePage)
-)
+ui.deleteButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.deletePage))
 
 # Página de excluir doação para Página inicial
-ui.deleteBackButton.clicked.connect(
-    lambda: ui.stackedWidget.setCurrentWidget(ui.homePage)
-)
+ui.deleteBackButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.homePage))
+
+# Página inicial para Página de relatórios
+ui.reportButton.clicked.connect(open_report_page)
+
+# Página de relatórios para Página inicial
+ui.reportBackButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.homePage))
 
 # desabilita o campo de busca quando "Todos os registros" estiver selecionado
 def toggle_search_field(checked: bool):
@@ -343,6 +403,9 @@ ui.deleteSearchButton.clicked.connect(load_donation_for_delete)
 
 # confirma a exclusão da doação
 ui.confirmDeleteButton.clicked.connect(confirm_delete_donation)
+
+# atualiza os dados do relatório
+ui.refreshReportButton.clicked.connect(load_report)
 
 # mostra a janela do sistema
 window.show()

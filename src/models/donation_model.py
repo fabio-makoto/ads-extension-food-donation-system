@@ -179,3 +179,79 @@ def find_all_donations(db: QSqlDatabase) -> list[dict]:
         donations.append(donation)
 
     return donations
+
+
+def get_donation_summary(db: QSqlDatabase) -> list[dict]:
+    # cria a consulta utilizando a conexão com o banco de dados
+    query = QSqlQuery(db)
+
+    # agrupa os registros por alimento e soma as quantidades doadas
+    query.prepare("""
+        SELECT food, SUM(quantity) AS total_quantity
+        FROM donations
+        GROUP BY food
+        ORDER BY total_quantity DESC
+    """)
+
+    # executa a consulta e retorna uma lista vazia em caso de erro
+    if not query.exec():
+        return []
+    
+    # lista que armazenará o resumo das doações
+    summary = []
+
+    # percorre os resultados retornados pela consulta
+    while query.next():
+        summary.append({
+            "food": query.value("food"),
+            "quantity": query.value("total_quantity")
+        })
+    
+    # retorna os alimentos e suas respectivas quantidades totais
+    return summary
+
+
+def get_total_donations(db: QSqlDatabase) -> int:
+    # cria a consulta utilizando a conexão com o banco de dados
+    query = QSqlQuery(db)
+
+    # conta quantas doações estão cadastradas
+    query.prepare("""
+        SELECT COUNT(*) AS total 
+        FROM donations
+    """)
+
+    # executa a consulta e retorna zero em caso de erro
+    if not query.exec():
+        return 0
+
+    # verifica se a consulta retornou um resultado
+    if query.next():
+        return int(query.value("total"))
+
+    return 0
+
+
+def get_total_items(db: QSqlDatabase) -> int:
+    # cria a consulta utilizando a conexão com o banco de dados
+    query = QSqlQuery(db)
+
+    # soma a quantidade de todos os itens doados
+    query.prepare("""
+        SELECT SUM(quantity) AS total
+        FROM donations
+    """)
+
+    # executa a consulta e retorna zero em caso de erro
+    if not query.exec():
+        return 0
+
+    # verifica se a consulta retornou um resultado
+    if query.next():
+        total = query.value("total")
+
+        # caso a tabela esteja vazia, SUM retorna NULL
+        if total is not None:
+            return int(total)
+    
+    return 0

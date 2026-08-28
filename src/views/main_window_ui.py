@@ -101,13 +101,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayoutHomePage.addWidget(self.deleteButton, 0, Qt.AlignHCenter)
 
-        self.pushButton = QPushButton(self.homePage)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setMinimumSize(QSize(250, 45))
-        self.pushButton.setMaximumSize(QSize(250, 45))
-        self.pushButton.setStyleSheet(u"")
+        self.reportButton = QPushButton(self.homePage)
+        self.reportButton.setObjectName(u"reportButton")
+        self.reportButton.setMinimumSize(QSize(250, 45))
+        self.reportButton.setMaximumSize(QSize(250, 45))
+        self.reportButton.setStyleSheet(u"")
 
-        self.verticalLayoutHomePage.addWidget(self.pushButton, 0, Qt.AlignHCenter)
+        self.verticalLayoutHomePage.addWidget(self.reportButton, 0, Qt.AlignHCenter)
 
         self.aboutButton = QPushButton(self.homePage)
         self.aboutButton.setObjectName(u"aboutButton")
@@ -455,6 +455,75 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.confirmDeleteButton, 9, 0, 1, 6, Qt.AlignHCenter)
 
         self.stackedWidget.addWidget(self.deletePage)
+        self.reportPage = QWidget()
+        self.reportPage.setObjectName(u"reportPage")
+        self.gridLayout_2 = QGridLayout(self.reportPage)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.topFoodValueLabel = QLabel(self.reportPage)
+        self.topFoodValueLabel.setObjectName(u"topFoodValueLabel")
+
+        self.gridLayout_2.addWidget(self.topFoodValueLabel, 4, 1, 1, 1, Qt.AlignLeft)
+
+        self.topFoodTitleLabel = QLabel(self.reportPage)
+        self.topFoodTitleLabel.setObjectName(u"topFoodTitleLabel")
+
+        self.gridLayout_2.addWidget(self.topFoodTitleLabel, 4, 0, 1, 1, Qt.AlignLeft)
+
+        self.totalItemsTitleLabel = QLabel(self.reportPage)
+        self.totalItemsTitleLabel.setObjectName(u"totalItemsTitleLabel")
+
+        self.gridLayout_2.addWidget(self.totalItemsTitleLabel, 3, 0, 1, 1, Qt.AlignLeft)
+
+        self.totalDonationsValueLabel = QLabel(self.reportPage)
+        self.totalDonationsValueLabel.setObjectName(u"totalDonationsValueLabel")
+
+        self.gridLayout_2.addWidget(self.totalDonationsValueLabel, 1, 1, 1, 1)
+
+        self.reportTitleLabel = QLabel(self.reportPage)
+        self.reportTitleLabel.setObjectName(u"reportTitleLabel")
+
+        self.gridLayout_2.addWidget(self.reportTitleLabel, 0, 0, 1, 4, Qt.AlignHCenter)
+
+        self.totalItemsValueLabel = QLabel(self.reportPage)
+        self.totalItemsValueLabel.setObjectName(u"totalItemsValueLabel")
+
+        self.gridLayout_2.addWidget(self.totalItemsValueLabel, 3, 1, 1, 1, Qt.AlignLeft)
+
+        self.refreshReportButton = QPushButton(self.reportPage)
+        self.refreshReportButton.setObjectName(u"refreshReportButton")
+
+        self.gridLayout_2.addWidget(self.refreshReportButton, 6, 0, 1, 4, Qt.AlignHCenter)
+
+        self.reportBackButton = QPushButton(self.reportPage)
+        self.reportBackButton.setObjectName(u"reportBackButton")
+
+        self.gridLayout_2.addWidget(self.reportBackButton, 7, 0, 1, 4, Qt.AlignHCenter)
+
+        self.reportTable = QTableWidget(self.reportPage)
+        if (self.reportTable.columnCount() < 2):
+            self.reportTable.setColumnCount(2)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.reportTable.setHorizontalHeaderItem(0, __qtablewidgetitem5)
+        __qtablewidgetitem6 = QTableWidgetItem()
+        self.reportTable.setHorizontalHeaderItem(1, __qtablewidgetitem6)
+        self.reportTable.setObjectName(u"reportTable")
+        self.reportTable.setStyleSheet(u"margin-right: 10px;")
+        self.reportTable.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.reportTable.setAlternatingRowColors(True)
+        self.reportTable.setSelectionBehavior(QAbstractItemView.SelectRows)
+
+        self.gridLayout_2.addWidget(self.reportTable, 5, 0, 1, 4)
+
+        self.totalDonationsTitleLabel = QLabel(self.reportPage)
+        self.totalDonationsTitleLabel.setObjectName(u"totalDonationsTitleLabel")
+
+        self.gridLayout_2.addWidget(self.totalDonationsTitleLabel, 1, 0, 1, 1, Qt.AlignLeft)
+
+        self.verticalSpacerBottomReportPage = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+
+        self.gridLayout_2.addItem(self.verticalSpacerBottomReportPage, 8, 0, 1, 4)
+
+        self.stackedWidget.addWidget(self.reportPage)
 
         self.verticalLayoutCentralWidget.addWidget(self.stackedWidget)
 
@@ -462,7 +531,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(4)
+        self.stackedWidget.setCurrentIndex(5)
         self.donateButton.setDefault(False)
         self.editFoodComboBox.setCurrentIndex(-1)
 
@@ -478,7 +547,7 @@ class Ui_MainWindow(object):
         self.searchButton.setText(QCoreApplication.translate("MainWindow", u"CONSULTAR", None))
         self.editButton.setText(QCoreApplication.translate("MainWindow", u"EDITAR DOA\u00c7\u00c3O", None))
         self.deleteButton.setText(QCoreApplication.translate("MainWindow", u"EXCLUIR DOA\u00c7\u00c3O", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"RELAT\u00d3RIO", None))
+        self.reportButton.setText(QCoreApplication.translate("MainWindow", u"RELAT\u00d3RIO", None))
         self.aboutButton.setText(QCoreApplication.translate("MainWindow", u"SOBRE", None))
         self.registerDonationButton.setText(QCoreApplication.translate("MainWindow", u"CADASTRAR DOA\u00c7\u00c3O", None))
         self.donateTitleLabel.setText(QCoreApplication.translate("MainWindow", u"CADASTRAR DOA\u00c7\u00c3O", None))
@@ -535,5 +604,18 @@ class Ui_MainWindow(object):
         self.deleteQuantityLabel.setText(QCoreApplication.translate("MainWindow", u"Quantidade:", None))
         self.deleteBackButton.setText(QCoreApplication.translate("MainWindow", u"VOLTAR", None))
         self.confirmDeleteButton.setText(QCoreApplication.translate("MainWindow", u"EXCLUIR DOA\u00c7\u00c3O", None))
+        self.topFoodValueLabel.setText(QCoreApplication.translate("MainWindow", u"-", None))
+        self.topFoodTitleLabel.setText(QCoreApplication.translate("MainWindow", u"Alimento mais doado:", None))
+        self.totalItemsTitleLabel.setText(QCoreApplication.translate("MainWindow", u"Total de itens doados:", None))
+        self.totalDonationsValueLabel.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.reportTitleLabel.setText(QCoreApplication.translate("MainWindow", u"RELAT\u00d3RIO DE DOA\u00c7\u00d5ES", None))
+        self.totalItemsValueLabel.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.refreshReportButton.setText(QCoreApplication.translate("MainWindow", u"ATUALIZAR", None))
+        self.reportBackButton.setText(QCoreApplication.translate("MainWindow", u"VOLTAR", None))
+        ___qtablewidgetitem5 = self.reportTable.horizontalHeaderItem(0)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Alimento", None))
+        ___qtablewidgetitem6 = self.reportTable.horizontalHeaderItem(1)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"Quantidade", None))
+        self.totalDonationsTitleLabel.setText(QCoreApplication.translate("MainWindow", u"Total de doa\u00e7\u00f5es:", None))
     # retranslateUi
 

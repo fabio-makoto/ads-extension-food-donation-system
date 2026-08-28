@@ -18,6 +18,10 @@ QWidget#deletePage {
 	background-color: #B3EBF2;
 }
 
+QWidget#reportPage {
+	background-color: #B3EBF2;
+}
+
 QLabel#titleLabel {
 	font-size: 24px;
 	font-weight: bold;
@@ -48,6 +52,11 @@ QLabel#deleteTitleLabel {
 	color: #263238;
 }
 
+QLabel#reportTitleLabel {
+	font-size: 24px;
+	font-weight: bold;
+	color: #263238;
+}
 
 QPushButton#searchBackButton {
 	margin-top: 5px;
