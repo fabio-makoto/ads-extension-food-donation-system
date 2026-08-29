@@ -9,7 +9,7 @@ from PySide6.QtCore import QDate, QLocale
 
 from database.connection import create_connection, create_tables
 from src.models.donation_model import (
-    find_all_donations, find_donation_by_id, insert_donation, find_donations_by_name, update_donations,
+    find_all_donations, find_donation_by_id, insert_donation, find_donations_by_name, update_donation,
     delete_donation, get_donation_summary, get_total_donations, get_total_items
     )
 
@@ -105,7 +105,7 @@ def search_donations() -> None:
             )
             return
 
-        # verifica se o valor informado para o ID é númerico
+        # verifica se o valor informado para o ID é numérico
         if not search_text.isdigit():
             QMessageBox.warning(window, "ID inválido", "Informe um ID válido.")
             return
@@ -168,6 +168,18 @@ def load_donation_for_edit() -> None:
     if donation is None:
         # caso seja informado um ID que não corresponda a nenhuma doação registrada
         QMessageBox.information(window, "Doação não encontrada", "Nenhuma doação foi encontrada com esse ID.")
+
+        # limpa os dados da busca anterior
+        ui.editNameLineEdit.clear()
+        ui.editFoodComboBox.setCurrentIndex(-1)
+        ui.editQuantitySpinBox.setValue(1)
+        ui.editDateEdit.clear()
+
+        # desabilita os campos de edição
+        ui.editFoodComboBox.setEnabled(False)
+        ui.editQuantitySpinBox.setEnabled(False)
+        ui.saveEditButton.setEnabled(False)
+
         return
     
     # preenche os dados encontrados
@@ -188,6 +200,9 @@ def load_donation_for_edit() -> None:
     ui.editQuantitySpinBox.setEnabled(True)
     ui.saveEditButton.setEnabled(True)
 
+    # impede que o ID seja alterado após carregar a doação
+    ui.editIdLineEdit.setEnabled(False)
+
 
 # função que irá salvar a edição da doação
 def save_donation_edit() -> None:
@@ -200,7 +215,7 @@ def save_donation_edit() -> None:
         QMessageBox.warning(window, "Campo obrigatório", "Informe o ID da doação.")
         return
     
-    if update_donations(db, int(donation_id), food, quantity):
+    if update_donation(db, int(donation_id), food, quantity):
         QMessageBox.information(window, "Doação atualizada", "Doação atualizada com sucesso.")
 
         # limpa os campos após a atualização
@@ -210,10 +225,11 @@ def save_donation_edit() -> None:
         ui.editQuantitySpinBox.setValue(1)
         ui.editDateEdit.clear()
 
-        # desabilita novamente os campos de edição
+        # desabilita e habilita novamente os campos de edição
         ui.editFoodComboBox.setEnabled(False)
         ui.editQuantitySpinBox.setEnabled(False)
         ui.saveEditButton.setEnabled(False)
+        ui.editIdLineEdit.setEnabled(True)
 
 
 # função que irá carregar a doação para excluir
@@ -241,6 +257,19 @@ def load_donation_for_delete() -> None:
         QMessageBox.information(
             window, "Doação não encontrada", "Nenhuma doação foi encontrada com esse ID."
         )
+
+        # caso não encontre nenhuma doação, limpe os campos 
+        ui.deleteNameLineEdit.clear()
+        ui.deleteFoodLineEdit.clear()
+        ui.deleteQuantitySpinBox.setValue(0)
+        ui.deleteDateEdit.clear()
+
+        # desabilita novamente o botão de exclusão
+        ui.confirmDeleteButton.setEnabled(False)
+
+        # impede que o ID seja alterado após carregar a doação
+        ui.deleteIdLineEdit.setEnabled(False)
+
         return
     
     # preenche os dados encontrados
@@ -271,13 +300,16 @@ def confirm_delete_donation() -> None:
         if delete_donation(db, int(donation_id)):
             QMessageBox.information(window, "Doação excluída", "Doação excluída com sucesso.")
 
+            # limpa os campos preenchidos
             ui.deleteIdLineEdit.clear()
             ui.deleteNameLineEdit.clear()
             ui.deleteFoodLineEdit.clear()
             ui.deleteQuantitySpinBox.setValue(0)
             ui.deleteDateEdit.clear()
 
+            # habilita e desabilita novamente os botoes e line edit
             ui.confirmDeleteButton.setEnabled(False)
+            ui.deleteIdLineEdit.setEnabled(True)
 
 
 # carrega as informações do relatório
@@ -288,7 +320,7 @@ def load_report() -> None:
     # busca a quantidade total de doações cadastradas
     total_donations = get_total_donations(db)
 
-    # busca a quantitade total de itens doados
+    # busca a quantidade total de itens doados
     total_items = get_total_items(db)
 
     # exibe o total de doações no label
@@ -318,7 +350,7 @@ def load_report() -> None:
 
         ui.reportTable.insertRow(row)
 
-        # adiciona o nome do alimneto na primeira coluna
+        # adiciona o nome do alimento na primeira coluna
         ui.reportTable.setItem(row, 0, QTableWidgetItem(str(item["food"])))
 
         # adiciona a quantidade total na segunda coluna
@@ -377,7 +409,7 @@ ui.aboutButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.abou
 ui.aboutBackButton.clicked.connect(lambda: ui.stackedWidget.setCurrentWidget(ui.homePage))
 
 # desabilita o campo de busca quando "Todos os registros" estiver selecionado
-def toggle_search_field(checked: bool):
+def toggle_search_field(checked: bool) -> None:
     if checked:
         ui.searchLineEdit.clear()
     

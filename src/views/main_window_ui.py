@@ -45,7 +45,7 @@ class Ui_MainWindow(object):
         self.logoLabel.setObjectName(u"logoLabel")
         self.logoLabel.setMinimumSize(QSize(150, 160))
         self.logoLabel.setMaximumSize(QSize(390, 160))
-        self.logoLabel.setPixmap(QPixmap(u"../images/logo.png"))
+        self.logoLabel.setPixmap(QPixmap(u"assets/images/logo.png"))
         self.logoLabel.setScaledContents(True)
 
         self.verticalLayoutHomePage.addWidget(self.logoLabel, 0, Qt.AlignHCenter)

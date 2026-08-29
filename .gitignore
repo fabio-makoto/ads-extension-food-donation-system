@@ -1,5 +1,14 @@
-help.txt
-LICENSE
-README.md
+# arquivos temporários do python
+__pycache__/
+*.py[cod]
+
+# banco de dados local
 donations.db
-__pycache__
+
+# arquivos locais
+help.txt
+
+# PyInstaller
+build/
+dist/
+*.spec

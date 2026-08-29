@@ -27,7 +27,7 @@ def insert_donation(db: QSqlDatabase, name: str, food: str, quantity: int, date:
     return True
 
 
-def find_donation_by_id(db: QSqlDatabase, donation_id: int) -> None:
+def find_donation_by_id(db: QSqlDatabase, donation_id: int) -> dict | None:
     # cria uma consulta associada à conexão com o banco de dados
     query = QSqlQuery(db)
 
@@ -43,7 +43,7 @@ def find_donation_by_id(db: QSqlDatabase, donation_id: int) -> None:
 
     if not query.exec():
         # se o comando SQL não rodar, aparecerá um pop-up com a mensagem de erro retornado pelo QtSql
-        QMessageBox.critical(None, "Erro ao consulta doação", query.lastError().text())
+        QMessageBox.critical(None, "Erro ao consultar doação", query.lastError().text())
         return None
 
     if query.next():
@@ -78,7 +78,7 @@ def find_donations_by_name(db: QSqlDatabase, name: str) -> list[dict]:
         QMessageBox.critical(None, "Erro ao consultar doações", query.lastError().text())
         return []
     
-    donations = []
+    donations: list[dict] = []
 
     # percorre todos os registros encontrados pela consulta
     while query.next():
@@ -95,7 +95,7 @@ def find_donations_by_name(db: QSqlDatabase, name: str) -> list[dict]:
     return donations
 
 
-def update_donations(db: QSqlDatabase, donation_id: int, food: str, quantity: int) -> bool:
+def update_donation(db: QSqlDatabase, donation_id: int, food: str, quantity: int) -> bool:
     # cria uma consulta associada à conexão com o banco de dados
     query = QSqlQuery(db)
 
@@ -112,7 +112,7 @@ def update_donations(db: QSqlDatabase, donation_id: int, food: str, quantity: in
     query.bindValue(":id", donation_id)
 
     if not query.exec():
-        # verifica se ocorreu algum erro executar o update
+        # verifica se ocorreu algum erro ao executar o update
         QMessageBox.critical(None, "Erro ao editar a doação", query.lastError().text())
         return False
     
@@ -148,7 +148,7 @@ def delete_donation(db: QSqlDatabase, donation_id: int) -> bool:
 
 
 def find_all_donations(db: QSqlDatabase) -> list[dict]:
-    # função de buscar todas as doações para utilizar no relatório
+    # cria uma consulta para buscar todas as doações cadastradas
     query = QSqlQuery(db)
 
     # prepara a consulta para buscar todas as doações cadastradas
@@ -164,7 +164,7 @@ def find_all_donations(db: QSqlDatabase) -> list[dict]:
         QMessageBox.critical(None, "Erro ao listar doações", query.lastError().text())
         return []
 
-    donations = []
+    donations: list[dict] = []
 
     # percorre todos os registros encontrados
     while query.next():
@@ -198,7 +198,7 @@ def get_donation_summary(db: QSqlDatabase) -> list[dict]:
         return []
     
     # lista que armazenará o resumo das doações
-    summary = []
+    summary: list[dict] = []
 
     # percorre os resultados retornados pela consulta
     while query.next():
@@ -223,6 +223,7 @@ def get_total_donations(db: QSqlDatabase) -> int:
 
     # executa a consulta e retorna zero em caso de erro
     if not query.exec():
+        QMessageBox.critical(None, "Erro ao gerar relatório", query.lastError().text())
         return 0
 
     # verifica se a consulta retornou um resultado
@@ -244,6 +245,7 @@ def get_total_items(db: QSqlDatabase) -> int:
 
     # executa a consulta e retorna zero em caso de erro
     if not query.exec():
+        QMessageBox.critical(None, "Erro ao gerar relatório", query.lastError().text())
         return 0
 
     # verifica se a consulta retornou um resultado
