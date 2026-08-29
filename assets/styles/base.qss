@@ -96,3 +96,16 @@ QPushButton:hover {
 QPushButton:pressed {
 	background-color: #2E6C7B;
 }
+
+QWidget {
+    color: #263238;
+}
+
+QLineEdit,
+QComboBox,
+QSpinBox,
+QDateEdit,
+QTableWidget {
+    background-color: white;
+    color: #263238;
+}

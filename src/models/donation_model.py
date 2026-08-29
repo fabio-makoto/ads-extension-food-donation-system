@@ -239,21 +239,18 @@ def get_total_items(db: QSqlDatabase) -> int:
 
     # soma a quantidade de todos os itens doados
     query.prepare("""
-        SELECT SUM(quantity) AS total
+        SELECT COALESCE(SUM(quantity), 0) AS total
         FROM donations
     """)
 
-    # executa a consulta e retorna zero em caso de erro
+    # executa a consulta
     if not query.exec():
         QMessageBox.critical(None, "Erro ao gerar relatório", query.lastError().text())
         return 0
 
-    # verifica se a consulta retornou um resultado
+    # retorna o total de itens doados
     if query.next():
         total = query.value("total")
-
-        # caso a tabela esteja vazia, SUM retorna NULL
-        if total is not None:
-            return int(total)
+        return int(total or 0)
     
     return 0
