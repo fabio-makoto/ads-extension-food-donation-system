@@ -19,7 +19,7 @@ from src.views.main_window_ui import Ui_MainWindow
 app = QApplication(sys.argv)
 
 # carrega o estilo da aplicação
-style_path = Path(__file__).resolve().parent.parent / "assets" / "styles" / "base.qss"
+style_path = Path.cwd() / "assets" / "styles" / "base.qss"
 
 with open(style_path, "r", encoding="utf-8") as file:
     app.setStyleSheet(file.read()) 

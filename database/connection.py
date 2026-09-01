@@ -5,8 +5,12 @@ from PySide6.QtWidgets import QMessageBox
 
 
 def create_connection() -> QSqlDatabase | None:
-    # define o caminho do banco de dados no mesmo diretório do connection.py
-    db_path = Path(__file__).resolve().parent / "donations.db"
+    # define a pasta onde o banco de dados será armazenado
+    database_path = Path.cwd() / "database"
+    database_path.mkdir(exist_ok=True)
+
+    # define o caminho do arquivo do banco
+    db_path = database_path / "donations.db"
     
     # cria a conexão utilizando o SQLite
     db = QSqlDatabase.addDatabase("QSQLITE")
@@ -23,7 +27,7 @@ def create_connection() -> QSqlDatabase | None:
 
 def create_tables(db: QSqlDatabase) -> bool:
     # define o caminho do arquivo que contém a estrutura do banco
-    schema_path = Path(__file__).resolve().parent / "schema.sql"
+    schema_path = Path.cwd() / "database" / "schema.sql"
     
     # lê os comandos SQL do arquivo
     with open(schema_path, "r", encoding="utf-8") as file:
